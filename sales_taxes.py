@@ -1,19 +1,17 @@
 from ast import Return
 import math
-taxfree_products = ['books', 'chocolate', 'headache pills' ] # tax free products list 
+taxfree_products = ['books', 'chocolates', 'headache pills' ] # tax free products list 
 input_case = 1  ## iteration number for input case according to the assignment
 
 ## round up a float to nearest 0.05
 def roundUp_nearest(x, a):
     return math.ceil(x / a) * a
 
-def findSub_string(a, b):
-    print(a, b)
-    for word in a:
-        
-        if word not in b: continue
-        else : return True
-    return False    
+# def findSub_string(a, b):
+#     for word in a:      
+#         if word not in b: continue
+#         else : return True
+#     return False    
 
 
 for j in range(input_case):
@@ -40,21 +38,18 @@ for j in range(input_case):
         ## calculate both sales tax and duty fees
         ## otherwise calculate only duty fees for imported product
         if 'imported' in v:
-            ##if not next((True for word in v if word in  "!".join(taxfree_products)), False):
-            #if not(any(word in v for word in "!".join(taxfree_products))):
-            if not findSub_string(v[1:-2], "!".join(taxfree_products)):
+            if not next((True for word in v[1:-2]  if word in  "!".join(taxfree_products)), False):
                 t =  roundUp_nearest((5 * p)/ 100 + (10 * p)/ 100, 0.05) ##calculate both tax and duty fees
             else :  t =  roundUp_nearest((5 * p)/ 100, .05)   ## calculate only tax 
             v[-1] = str(format(float(v[-1]) + t, '.2f')) ## update last element of v list
             sales_taxes = sales_taxes + t ## update our sales taxes
 
             ## not imported and not tax free items
-        elif not findSub_string(v[1:-2], "!".join(taxfree_products)):
+        elif not next((True for word in v[1:-2]  if word in  "!".join(taxfree_products)), False):
             t =  roundUp_nearest((10 * p)/ 100, .05)
             v[-1] = str(format(float(v[-1]) + t, '.2f')) ## formating v list to show appropriate output according to assignment output pattern
             sales_taxes = sales_taxes + t
-        ##tr = next((True for word in v if word in  "!".join(taxfree_products)), False)
-        print(findSub_string(v[1:-2], "!".join(taxfree_products)))
+
         total  = total + p + t ## update totat prices included taxes(all kinds)
         v.remove(v[-2]) ## formating v list to show appropriate output according to assignment 
         v[-2] = v[-2]+':' ## same thing here
@@ -63,7 +58,5 @@ for j in range(input_case):
     print('output {}:\n'.format(j+1))
     for i in output_list:
         print(i)    
-    t = "!".join(taxfree_products)
-    print(t)
     print('Sales Taxes: ',format(sales_taxes, '.2f'))
     print('Total: ', format(total, '.2f'))
