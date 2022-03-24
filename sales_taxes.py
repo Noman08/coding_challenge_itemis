@@ -1,7 +1,6 @@
-from ast import Return
 import math
-taxfree_products = ['books', 'chocolates', 'headache pills' ] # tax free products list 
-input_case = 1  ## iteration number for input case according to the assignment
+taxfree_products = ['books', 'chocolates', 'headache pills' ] # tax free product list , i assume 3 items for this problem according to input case but we can add more items and can do many things here!!
+input_case = 3  ## iteration number for input case according to the assignment here is 3
 
 ## round up a float to nearest 0.05
 def roundUp_nearest(x, a):
@@ -13,14 +12,13 @@ def roundUp_nearest(x, a):
 #         else : return True
 #     return False    
 
-
+print('\nPlease press ENTER key 2 times to stop input operation ')
 for j in range(input_case):
     input_list = [] 
     output_list = []
     total = 0 ## total price of all items include tax
     sales_taxes = 0 ## total taxes
-
-    print('input {}:\n'.format(j+1))
+    print('Input {}:\n'.format(j+1))
     ## infinte loop for taking input items 
     ## break loop while press double 'ENTER' key
     while True:
@@ -45,7 +43,7 @@ for j in range(input_case):
             sales_taxes = sales_taxes + t ## update our sales taxes
 
             ## not imported and not tax free items
-        elif not next((True for word in v[1:-2]  if word in  "!".join(taxfree_products)), False):
+        elif not next((True for word in v[1:-2]  if word in  "!".join(taxfree_products)), False): ## use next()  to find first true and return without further searching 
             t =  roundUp_nearest((10 * p)/ 100, .05)
             v[-1] = str(format(float(v[-1]) + t, '.2f')) ## formating v list to show appropriate output according to assignment output pattern
             sales_taxes = sales_taxes + t
@@ -55,8 +53,10 @@ for j in range(input_case):
         v[-2] = v[-2]+':' ## same thing here
         output_list.append(' '.join(v)) ## make a string with white space from v and push it to output list
 
-    print('output {}:\n'.format(j+1))
+    print('Output {}:\n'.format(j+1))
+    ## print output 
     for i in output_list:
         print(i)    
     print('Sales Taxes: ',format(sales_taxes, '.2f'))
     print('Total: ', format(total, '.2f'))
+    print('\n')
